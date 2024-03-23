@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		B58F9E3E2BAE4FB0008B5C6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E3D2BAE4FB0008B5C6E /* AppDelegate.swift */; };
 		B58F9E402BAE4FB0008B5C6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E3F2BAE4FB0008B5C6E /* SceneDelegate.swift */; };
-		B58F9E422BAE4FB0008B5C6E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E412BAE4FB0008B5C6E /* ViewController.swift */; };
 		B58F9E452BAE4FB0008B5C6E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B58F9E442BAE4FB0008B5C6E /* Base */; };
 		B58F9E472BAE4FB1008B5C6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B58F9E462BAE4FB1008B5C6E /* Assets.xcassets */; };
 		B58F9E4A2BAE4FB1008B5C6E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B58F9E492BAE4FB1008B5C6E /* Base */; };
+		B58F9E582BAE51A7008B5C6E /* SetupTimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E572BAE51A7008B5C6E /* SetupTimetableController.swift */; };
+		B58F9E5A2BAE5BE5008B5C6E /* Extionsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E592BAE5BE5008B5C6E /* Extionsion.swift */; };
+		B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */; };
+		B58F9E5E2BAEB4C4008B5C6E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E5D2BAEB4C4008B5C6E /* Timetable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B58F9E3A2BAE4FB0008B5C6E /* Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timetable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58F9E3D2BAE4FB0008B5C6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B58F9E3F2BAE4FB0008B5C6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B58F9E412BAE4FB0008B5C6E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B58F9E442BAE4FB0008B5C6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B58F9E462BAE4FB1008B5C6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B58F9E492BAE4FB1008B5C6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B58F9E4B2BAE4FB1008B5C6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B58F9E572BAE51A7008B5C6E /* SetupTimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTimetableController.swift; sourceTree = "<group>"; };
+		B58F9E592BAE5BE5008B5C6E /* Extionsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extionsion.swift; sourceTree = "<group>"; };
+		B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableController.swift; sourceTree = "<group>"; };
+		B58F9E5D2BAEB4C4008B5C6E /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,58 @@
 		B58F9E3C2BAE4FB0008B5C6E /* Timetable */ = {
 			isa = PBXGroup;
 			children = (
+				B58F9E562BAE513F008B5C6E /* Model */,
+				B58F9E552BAE513E008B5C6E /* View */,
+				B58F9E542BAE513C008B5C6E /* ViewModel */,
+				B58F9E532BAE5139008B5C6E /* Controller */,
+				B58F9E522BAE5137008B5C6E /* Utils */,
 				B58F9E3D2BAE4FB0008B5C6E /* AppDelegate.swift */,
 				B58F9E3F2BAE4FB0008B5C6E /* SceneDelegate.swift */,
-				B58F9E412BAE4FB0008B5C6E /* ViewController.swift */,
 				B58F9E432BAE4FB0008B5C6E /* Main.storyboard */,
 				B58F9E462BAE4FB1008B5C6E /* Assets.xcassets */,
 				B58F9E482BAE4FB1008B5C6E /* LaunchScreen.storyboard */,
 				B58F9E4B2BAE4FB1008B5C6E /* Info.plist */,
 			);
 			path = Timetable;
+			sourceTree = "<group>";
+		};
+		B58F9E522BAE5137008B5C6E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B58F9E592BAE5BE5008B5C6E /* Extionsion.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B58F9E532BAE5139008B5C6E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B58F9E572BAE51A7008B5C6E /* SetupTimetableController.swift */,
+				B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B58F9E542BAE513C008B5C6E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B58F9E552BAE513E008B5C6E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B58F9E562BAE513F008B5C6E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B58F9E5D2BAEB4C4008B5C6E /* Timetable.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +187,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B58F9E422BAE4FB0008B5C6E /* ViewController.swift in Sources */,
+				B58F9E582BAE51A7008B5C6E /* SetupTimetableController.swift in Sources */,
 				B58F9E3E2BAE4FB0008B5C6E /* AppDelegate.swift in Sources */,
+				B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */,
 				B58F9E402BAE4FB0008B5C6E /* SceneDelegate.swift in Sources */,
+				B58F9E5A2BAE5BE5008B5C6E /* Extionsion.swift in Sources */,
+				B58F9E5E2BAEB4C4008B5C6E /* Timetable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
