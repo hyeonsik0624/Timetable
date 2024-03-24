@@ -62,7 +62,7 @@ class SetupTimetableController: UIViewController {
         saveTimetable(withSubjects: subjects)
         
         guard let nextDay = Weekday(rawValue: day.rawValue + 1) else {
-            let controller = TimetableController()
+            let controller = TimetableController(collectionViewLayout: UICollectionViewFlowLayout())
             controller.modalPresentationStyle = .fullScreen
             present(controller, animated: true)
             return
