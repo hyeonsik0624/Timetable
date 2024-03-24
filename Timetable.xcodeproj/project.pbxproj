@@ -17,6 +17,7 @@
 		B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */; };
 		B58F9E5E2BAEB4C4008B5C6E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E5D2BAEB4C4008B5C6E /* Timetable.swift */; };
 		B58F9E602BAEFF4A008B5C6E /* TimetableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E5F2BAEFF4A008B5C6E /* TimetableCell.swift */; };
+		B58F9E622BB06234008B5C6E /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E612BB06234008B5C6E /* LoadingController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableController.swift; sourceTree = "<group>"; };
 		B58F9E5D2BAEB4C4008B5C6E /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		B58F9E5F2BAEFF4A008B5C6E /* TimetableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCell.swift; sourceTree = "<group>"; };
+		B58F9E612BB06234008B5C6E /* LoadingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				B58F9E572BAE51A7008B5C6E /* SetupTimetableController.swift */,
 				B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */,
+				B58F9E612BB06234008B5C6E /* LoadingController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				B58F9E3E2BAE4FB0008B5C6E /* AppDelegate.swift in Sources */,
 				B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */,
 				B58F9E402BAE4FB0008B5C6E /* SceneDelegate.swift in Sources */,
+				B58F9E622BB06234008B5C6E /* LoadingController.swift in Sources */,
 				B58F9E5A2BAE5BE5008B5C6E /* Extionsion.swift in Sources */,
 				B58F9E602BAEFF4A008B5C6E /* TimetableCell.swift in Sources */,
 				B58F9E5E2BAEB4C4008B5C6E /* Timetable.swift in Sources */,

@@ -27,22 +27,12 @@ class TimetableController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkIfDataExists()
         configureUI()
         configureCollectionView()
+        loadTimetableData()
     }
     
     // MARK: - Helpers
-    
-    func checkIfDataExists() {
-        if UserDefaults.standard.array(forKey: "5") != nil {
-            loadTimetableData()
-        } else {
-            DispatchQueue.main.async {
-                self.showSetupController()
-            }
-        }
-    }
     
     func loadTimetableData() {
         self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "1") as! [String])
@@ -50,12 +40,6 @@ class TimetableController: UICollectionViewController {
         self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "3") as! [String])
         self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "4") as! [String])
         self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "5") as! [String])
-    }
-    
-    func showSetupController() {
-        let controller = SetupTimetableController()
-        controller.modalPresentationStyle = .fullScreen
-        present(controller, animated: true)
     }
     
     func configureUI() {
