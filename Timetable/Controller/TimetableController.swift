@@ -18,17 +18,46 @@ class TimetableController: UICollectionViewController {
     }
     
     private let numberOfDays: CGFloat = 5
-    private let numberOfClasses: CGFloat = 7
+    private let numberOfPeriods: CGFloat = 7
     
     private let cellWidth: CGFloat = 70
     private let cellHeigt: CGFloat = 70
+    
+    private lazy var daysHeaderStack: UIStackView = {
+        let mon = makeHeaderLabel("월")
+        let tue = makeHeaderLabel("화")
+        let wed = makeHeaderLabel("수")
+        let thu = makeHeaderLabel("목")
+        let fri = makeHeaderLabel("금")
+        
+        let stack = UIStackView(arrangedSubviews: [mon, tue, wed, thu, fri])
+        stack.distribution = .fillEqually
+        
+        return stack
+    }()
+    
+    private lazy var periodHeaderStack: UIStackView = {
+        let first = makeHeaderLabel("1")
+        let second = makeHeaderLabel("2")
+        let third = makeHeaderLabel("3")
+        let fourth = makeHeaderLabel("4")
+        let fifth = makeHeaderLabel("5")
+        let sixth = makeHeaderLabel("6")
+        let seventh = makeHeaderLabel("7")
+        
+        let stack = UIStackView(arrangedSubviews: [first, second, third, fourth, fifth, sixth, seventh])
+        stack.distribution = .fillEqually
+        stack.axis = .vertical
+        
+        return stack
+    }()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         configureCollectionView()
+        configureUI()
         loadTimetableData()
     }
     
@@ -44,13 +73,19 @@ class TimetableController: UICollectionViewController {
     
     func configureUI() {
         view.backgroundColor = .systemBackground
+        
+        view.addSubview(daysHeaderStack)
+        daysHeaderStack.anchor(left: collectionView.leftAnchor, bottom: collectionView.topAnchor, right: collectionView.rightAnchor, paddingBottom: 5)
+        
+        view.addSubview(periodHeaderStack)
+        periodHeaderStack.anchor(top: collectionView.topAnchor, left: view.leftAnchor, bottom: collectionView.bottomAnchor, paddingLeft: 4)
     }
     
     func configureCollectionView() {
         collectionView.register(TimetableCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         let width = cellWidth * numberOfDays + numberOfDays
-        let height = cellHeigt * numberOfClasses + numberOfClasses
+        let height = cellHeigt * numberOfPeriods + numberOfPeriods
         collectionView.setDimension(width: width, height: height)
         collectionView.centerX(withView: view)
         collectionView.centerY(withView: view)
@@ -58,13 +93,21 @@ class TimetableController: UICollectionViewController {
         guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         layout.scrollDirection = .horizontal
     }
+    
+    func makeHeaderLabel(_ day: String) -> UILabel {
+        let label = UILabel()
+        label.text = day
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }
 }
 
 // MARK: - CollectionViewDatasource / Delegate
 
 extension TimetableController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Int(numberOfDays * numberOfClasses)
+        return Int(numberOfDays * numberOfPeriods)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
