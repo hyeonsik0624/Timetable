@@ -19,6 +19,14 @@ class TimetableCell: UICollectionViewCell {
         return label
     }()
     
+    let classroomLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textAlignment = .center
+        label.text = "3-2"
+        return label
+    }()
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -35,7 +43,21 @@ class TimetableCell: UICollectionViewCell {
     func configureUI() {
         backgroundColor = .systemGray5
         
-        addSubview(subjectLabel)
-        subjectLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+//        addSubview(subjectLabel)
+//        subjectLabel.centerX(withView: self)
+//        subjectLabel.centerY(withView: self)
+//        
+//        addSubview(classroomLabel)
+//        classroomLabel.anchor(top: subjectLabel.bottomAnchor)
+//        classroomLabel.centerX(withView: subjectLabel)
+        
+        let stack = UIStackView(arrangedSubviews: [subjectLabel, classroomLabel])
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.spacing = 0
+        
+        addSubview(stack)
+        stack.centerX(withView: self)
+        stack.centerY(withView: self)
     }
 }

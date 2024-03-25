@@ -13,7 +13,9 @@ class TimetableController: UICollectionViewController {
     
     // MARK: - Properties
 
-    private var timetable = [String]() {
+    private var subjects = [String]()
+    
+    private var classrooms = [String]() {
         didSet { collectionView.reloadData() }
     }
     
@@ -64,15 +66,21 @@ class TimetableController: UICollectionViewController {
     // MARK: - Helpers
     
     func loadTimetableData() {
-        self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "1") as! [String])
-        self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "2") as! [String])
-        self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "3") as! [String])
-        self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "4") as! [String])
-        self.timetable.append(contentsOf: UserDefaults.standard.array(forKey: "5") as! [String])
+        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:1") as! [String])
+        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:2") as! [String])
+        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:3") as! [String])
+        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:4") as! [String])
+        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:5") as! [String])
+        
+        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:1") as! [String])
+        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:2") as! [String])
+        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:3") as! [String])
+        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:4") as! [String])
+        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:5") as! [String])
     }
     
     func configureUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         
         view.addSubview(daysHeaderStack)
         daysHeaderStack.anchor(left: collectionView.leftAnchor, bottom: collectionView.topAnchor, right: collectionView.rightAnchor, paddingBottom: 5)
@@ -97,7 +105,6 @@ class TimetableController: UICollectionViewController {
     func makeHeaderLabel(_ day: String) -> UILabel {
         let label = UILabel()
         label.text = day
-        label.textColor = .black
         label.textAlignment = .center
         return label
     }
@@ -112,7 +119,8 @@ extension TimetableController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TimetableCell
-        cell.subjectLabel.text = timetable[indexPath.row]
+        cell.subjectLabel.text = subjects[indexPath.row]
+        cell.classroomLabel.text = classrooms[indexPath.row]
         return cell
     }
 }
