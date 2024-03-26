@@ -200,8 +200,18 @@ class SetupTimetableController: UIViewController {
     func updateUI() {
         clearAllTextFields()
         
-        guidanceLabel.text = "\(day.name) 시간표를 입력해주세요"
-        daysLabel.text = day.name
+        UIView.animate(withDuration: 0.2) { [self] in
+            guidanceLabel.alpha = 0
+            daysLabel.alpha = 0
+        } completion: { _ in
+            self.guidanceLabel.text = "\(self.day.name) 시간표를 입력해주세요"
+            self.daysLabel.text = self.day.name
+            
+            UIView.animate(withDuration: 0.2) { [self] in
+                self.guidanceLabel.alpha = 1
+                self.daysLabel.alpha = 1
+            }
+        }
         
         setupFirstResponder()
     }
