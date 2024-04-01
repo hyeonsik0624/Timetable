@@ -23,11 +23,7 @@ struct Provider: TimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = TimetableEntry(date: Date())
-            entries.append(entry)
-        }
+        entries.append(TimetableEntry(date: Date()))
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
@@ -40,16 +36,20 @@ struct TimetableEntry: TimelineEntry {
 
 struct TimetableWidgetEntryView : View {
     var entry: Provider.Entry
+    
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        VStack {
-            TimetableWidgetView(period: 1, subject: "국어", classroom: "3-2")
-            TimetableWidgetView(period: 2, subject: "영어", classroom: "3-1")
-            TimetableWidgetView(period: 3, subject: "과학", classroom: "3-3")
-            TimetableWidgetView(period: 4, subject: "체육", classroom: "체육관")
-            TimetableWidgetView(period: 5, subject: "실용경제", classroom: "강의동 1층")
-            TimetableWidgetView(period: 6, subject: "영독작", classroom: "3-4")
-            TimetableWidgetView(period: 7, subject: "물2", classroom: "3-2")
+        ZStack {
+            ContainerRelativeShape()
+                .fill(colorScheme == .dark ? Color(white: 0.1).gradient : Color.white.gradient)
+                .padding(-20)
+            
+            HStack(alignment: .center, content: {
+                PeriodTextView()
+                SubjectTextView(subjects: ["국어", "영어", "수학", "과학", "체육", "경제", "사회"])
+                ClassroomTextView(classrooms: ["3-1", "3-2", "3-3", "3-4", "체육관", "2-3", "1-1"])
+            })
         }
     }
 }
@@ -73,33 +73,42 @@ struct TimetableWidget: Widget {
     }
 }
 
-struct TimetableWidgetView: View {
-    let period: Int
-    let subject: String
-    let classroom: String
+struct PeriodTextView: View {
+    let offset = 7
     
     var body: some View {
-        HStack {
-            VStack {
-                Text("\(period):")
+        VStack {
+            ForEach(1...offset, id: \.self) { i in
+                Text("\(i):")
                     .fontWeight(.light)
-                    .frame(maxWidth: .infinity, alignment: .center)
             }
-            
-            VStack {
+        }
+    }
+}
+
+struct SubjectTextView: View {
+    let subjects: [String]
+    
+    var body: some View {
+        VStack {
+            ForEach(subjects, id: \.self) { subject in
                 Text(subject)
-                    .fontWeight(.bold)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .fontWeight(.heavy)
             }
-            
-            VStack {
+        }
+    }
+}
+
+struct ClassroomTextView: View {
+    let classrooms: [String]
+    
+    var body: some View {
+        VStack {
+            ForEach(classrooms, id: \.self) { classroom in
                 Text(classroom)
                     .fontWeight(.medium)
+                    .fontDesign(.rounded)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, alignment: .center)
             }
         }
     }
