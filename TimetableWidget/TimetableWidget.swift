@@ -23,7 +23,7 @@ struct Provider: TimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        entries.append(TimetableEntry(date: Date()))
+        entries.append(TimetableEntry(date: currentDate))
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
@@ -45,11 +45,7 @@ struct TimetableWidgetEntryView : View {
                 .fill(colorScheme == .dark ? Color(white: 0.1).gradient : Color.white.gradient)
                 .padding(-20)
             
-            HStack(alignment: .center, content: {
-                PeriodTextView()
-                SubjectTextView(subjects: ["국어", "영어", "수학", "과학", "체육", "경제", "사회"])
-                ClassroomTextView(classrooms: ["3-1", "3-2", "3-3", "3-4", "체육관", "2-3", "1-1"])
-            })
+            TimetableGrid()
         }
     }
 }
@@ -68,8 +64,9 @@ struct TimetableWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("시간표")
+        .description("위젯으로 시간표를 빠르게 확인해 보세요")
+        .supportedFamilies([.systemSmall])
     }
 }
 
@@ -111,6 +108,67 @@ struct ClassroomTextView: View {
                     .lineLimit(1)
             }
         }
+    }
+}
+
+struct TimetableGrid: View {
+    let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
+    
+    var body: some View {
+        GeometryReader(content: { geometry in
+            LazyVGrid(columns: columns, content: {
+                PeriodGrid()
+                    .frame(height: geometry.size.height)
+                SubjectGrid()
+                    .frame(height: geometry.size.height)
+                ClassroomGrid()
+                    .frame(height: geometry.size.height)
+            })
+        })
+    }
+}
+
+struct PeriodGrid: View {
+    let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
+    
+    var body: some View {
+        LazyHGrid(rows: rows, content: {
+            ForEach(1...7, id: \.self) { i in
+                Text("\(i):")
+                    .fontWeight(.light)
+            }
+        })
+    }
+}
+
+struct SubjectGrid: View {
+    let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
+    
+    var body: some View {
+        LazyHGrid(rows: rows, content: {
+            ForEach(1...7, id: \.self) { i in
+                Text("국어")
+                    .fontWeight(.heavy)
+            }
+        })
+    }
+}
+
+struct ClassroomGrid: View {
+    let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
+    
+    var body: some View {
+        LazyHGrid(rows: rows, content: {
+            ForEach(1...7, id: \.self) { i in
+                Text("3-2")
+                    .lineLimit(0)
+                    .minimumScaleFactor(0.5)
+                    .frame(maxWidth: 40, minHeight: 30, maxHeight: .infinity)
+                    .fontWeight(.regular)
+                    .fontDesign(.rounded)
+                    .multilineTextAlignment(.center)
+            }
+        })
     }
 }
 
