@@ -114,26 +114,26 @@ struct ClassroomTextView: View {
 struct TimetableGrid: View {
     let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
     
+    let subjects = ["사문탐", "실용경제", "동사", "확통", "동아리", "동아리", "물II"]
+    let classrooms = ["3-3", "강1층", "3-3", "3-2", "컴실", "강3층", "3-4"]
+    
     var body: some View {
-        GeometryReader(content: { geometry in
-            LazyVGrid(columns: columns, content: {
-                PeriodGrid()
-                    .frame(height: geometry.size.height)
-                SubjectGrid()
-                    .frame(height: geometry.size.height)
-                ClassroomGrid()
-                    .frame(height: geometry.size.height)
-            })
-        })
+        HStack() {
+            PeriodGrid(numberOfPeriod: subjects.count)
+            SubjectGrid(subjects: subjects)
+            ClassroomGrid(classrooms: classrooms)
+        }
     }
 }
 
 struct PeriodGrid: View {
     let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
     
+    let numberOfPeriod: Int
+    
     var body: some View {
         LazyHGrid(rows: rows, content: {
-            ForEach(1...7, id: \.self) { i in
+            ForEach(1...numberOfPeriod, id: \.self) { i in
                 Text("\(i):")
                     .fontWeight(.light)
             }
@@ -144,10 +144,12 @@ struct PeriodGrid: View {
 struct SubjectGrid: View {
     let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
     
+    let subjects: [String]
+    
     var body: some View {
         LazyHGrid(rows: rows, content: {
-            ForEach(1...7, id: \.self) { i in
-                Text("국어")
+            ForEach(1...subjects.count, id: \.self) { i in
+                Text(subjects[i - 1])
                     .fontWeight(.heavy)
             }
         })
@@ -157,13 +159,13 @@ struct SubjectGrid: View {
 struct ClassroomGrid: View {
     let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
     
+    let classrooms: [String]
+    
     var body: some View {
         LazyHGrid(rows: rows, content: {
-            ForEach(1...7, id: \.self) { i in
-                Text("3-2")
-                    .lineLimit(0)
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: 40, minHeight: 30, maxHeight: .infinity)
+            ForEach(1...classrooms.count, id: \.self) { i in
+                Text(classrooms[i - 1])
+                    .font(.system(size: 14))
                     .fontWeight(.regular)
                     .fontDesign(.rounded)
                     .multilineTextAlignment(.center)
