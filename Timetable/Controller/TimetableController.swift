@@ -26,28 +26,14 @@ class TimetableController: UICollectionViewController {
     private let cellHeigt: CGFloat = 70
     
     private lazy var daysHeaderStack: UIStackView = {
-        let mon = makeHeaderLabel("월")
-        let tue = makeHeaderLabel("화")
-        let wed = makeHeaderLabel("수")
-        let thu = makeHeaderLabel("목")
-        let fri = makeHeaderLabel("금")
-        
-        let stack = UIStackView(arrangedSubviews: [mon, tue, wed, thu, fri])
+        let stack = UIStackView(arrangedSubviews: [makeHeaderLabel("월"), makeHeaderLabel("화"), makeHeaderLabel("수"), makeHeaderLabel("목"), makeHeaderLabel("금")])
         stack.distribution = .fillEqually
         
         return stack
     }()
     
     private lazy var periodHeaderStack: UIStackView = {
-        let first = makeHeaderLabel("1")
-        let second = makeHeaderLabel("2")
-        let third = makeHeaderLabel("3")
-        let fourth = makeHeaderLabel("4")
-        let fifth = makeHeaderLabel("5")
-        let sixth = makeHeaderLabel("6")
-        let seventh = makeHeaderLabel("7")
-        
-        let stack = UIStackView(arrangedSubviews: [first, second, third, fourth, fifth, sixth, seventh])
+        let stack = UIStackView(arrangedSubviews: [makeHeaderLabel("1"), makeHeaderLabel("2"), makeHeaderLabel("3"), makeHeaderLabel("4"), makeHeaderLabel("5"), makeHeaderLabel("6"), makeHeaderLabel("7")])
         stack.distribution = .fillEqually
         stack.axis = .vertical
         
@@ -66,17 +52,10 @@ class TimetableController: UICollectionViewController {
     // MARK: - Helpers
     
     func loadTimetableData() {
-        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:1") as! [String])
-        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:2") as! [String])
-        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:3") as! [String])
-        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:4") as! [String])
-        self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:5") as! [String])
-        
-        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:1") as! [String])
-        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:2") as! [String])
-        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:3") as! [String])
-        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:4") as! [String])
-        self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:5") as! [String])
+        for i in 1...5 {
+            self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:\(i)") as! [String])
+            self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:\(i)") as! [String])
+        }
     }
     
     func configureUI() {
