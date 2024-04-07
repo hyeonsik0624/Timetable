@@ -27,31 +27,15 @@ class SetupTimetableController: UIViewController {
         return label
     }()
     
-    private lazy var firstPeriodInputView = makeTimetableInputView(period: 1)
-    private lazy var secondPeriodInputView = makeTimetableInputView(period: 2)
-    private lazy var thirdPeriodInputView = makeTimetableInputView(period: 3)
-    private lazy var fourthPeriodInputView = makeTimetableInputView(period: 4)
-    private lazy var fifthPeriodInputView = makeTimetableInputView(period: 5)
-    private lazy var sixthPeriodInputView = makeTimetableInputView(period: 6)
-    private lazy var seventhPeriodInputView = makeTimetableInputView(period: 7)
-    
-    private lazy var firstClassroomInputView = makeTimetableInputView()
-    private lazy var secondClassroomInputView = makeTimetableInputView()
-    private lazy var thirdClassroomInputView = makeTimetableInputView()
-    private lazy var fourthClassroomInputView = makeTimetableInputView()
-    private lazy var fifthClassroomInputView = makeTimetableInputView()
-    private lazy var sixthClassroomInputView = makeTimetableInputView()
-    private lazy var seventhClassroomInputView = makeTimetableInputView()
-    
     private lazy var subjectInputStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [firstPeriodInputView, secondPeriodInputView, thirdPeriodInputView, fourthPeriodInputView, fifthPeriodInputView, sixthPeriodInputView, seventhPeriodInputView])
+        let stack = UIStackView(arrangedSubviews: [makeTimetableInputView(period: 1), makeTimetableInputView(period: 2), makeTimetableInputView(period: 3), makeTimetableInputView(period: 4), makeTimetableInputView(period: 5), makeTimetableInputView(period: 6), makeTimetableInputView(period: 7)])
         stack.axis = .vertical
         stack.spacing = 10
         return stack
     }()
     
     private lazy var classroomInputStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [firstClassroomInputView, secondClassroomInputView, thirdClassroomInputView, fourthClassroomInputView, fifthClassroomInputView, sixthClassroomInputView, seventhClassroomInputView])
+        let stack = UIStackView(arrangedSubviews: [makeTimetableInputView(), makeTimetableInputView(), makeTimetableInputView(), makeTimetableInputView(), makeTimetableInputView(), makeTimetableInputView(), makeTimetableInputView()])
         stack.axis = .vertical
         stack.spacing = 10
         return stack
@@ -69,10 +53,71 @@ class SetupTimetableController: UIViewController {
         return button
     }()
     
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .systemGray
+        button.setTitle("이전", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.setTitleColor(.white, for: .normal)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(handleBackButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var dayControlButtonStack: UIStackView = {
+        let stack = UIStackView()
+        stack.spacing = 5
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    private var subjectTextFields: [UITextField] {
+        var textFields = [UITextField]()
+        
+        subjectInputStack.arrangedSubviews.forEach { containerView in
+            containerView.subviews.forEach { subview in
+                guard let tf = subview as? UITextField else { return }
+                textFields.append(tf)
+            }
+        }
+        
+        return textFields
+    }
+    
+    private var classroomTextFields: [UITextField] {
+        var textFields = [UITextField]()
+        
+        classroomInputStack.arrangedSubviews.forEach { containerView in
+            containerView.subviews.forEach { subview in
+                guard let tf = subview as? UITextField else { return }
+                textFields.append(tf)
+            }
+        }
+        
+        return textFields
+    }
+    
+    private var allTextFields: [UITextField] {
+        var textFields = [UITextField]()
+        
+        for i in 0...subjectTextFields.count - 1 {
+            textFields.append(subjectTextFields[i])
+            if i < classroomTextFields.count {
+                textFields.append(classroomTextFields[i])
+            }
+        }
+        
+        return textFields
+    }
+    
+    private lazy var mondayDayControlButtonWidhtConstraint = dayControlButtonStack.widthAnchor.constraint(equalToConstant: 100)
+    private lazy var normalDayControlButtonWidhtConstraint = dayControlButtonStack.widthAnchor.constraint(equalToConstant: 210)
+    
     // MARK: - Actions
     
     @objc func handleNextButtonTapped() {
-        saveTimetable()
+        saveTimetableData()
         
         guard let nextDay = Weekday(rawValue: day.rawValue + 1) else {
             let controller = TimetableController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -84,13 +129,18 @@ class SetupTimetableController: UIViewController {
         day = nextDay
     }
     
+    @objc func handleBackButtonTapped() {
+        guard let newDay = Weekday(rawValue: day.rawValue - 1) else { return }
+        day = newDay
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         updateUI()
-        setupFirstResponder()
+        setupTextFields()
     }
     
     // MARK: - Helpers
@@ -112,10 +162,11 @@ class SetupTimetableController: UIViewController {
         stack.centerX(withView: view)
         stack.anchor(top: daysLabel.bottomAnchor, paddingTop: 4)
         
-        view.addSubview(nextButton)
-        nextButton.setDimension(width: 100, height: 40)
-        nextButton.anchor(top: stack.bottomAnchor, paddingTop: 10)
-        nextButton.centerX(withView: stack)
+        view.addSubview(dayControlButtonStack)
+        mondayDayControlButtonWidhtConstraint.isActive = true
+        dayControlButtonStack.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        dayControlButtonStack.anchor(top: stack.bottomAnchor, paddingTop: 10)
+        dayControlButtonStack.centerX(withView: stack)
     }
     
     func makeTimetableInputView(period: Int? = nil) -> UIStackView {
@@ -141,10 +192,8 @@ class SetupTimetableController: UIViewController {
         return stack
     }
     
-    func setupFirstResponder() {
-        if let firstTextField = firstPeriodInputView.arrangedSubviews.first(where: { $0.tag == 1 }) {
-            firstTextField.becomeFirstResponder()
-        }
+    func setupTextFields() {
+        allTextFields.forEach { $0.delegate = self; $0.returnKeyType = .next }
     }
     
     func getSubjects() -> [String] {
@@ -213,14 +262,81 @@ class SetupTimetableController: UIViewController {
             }
         }
         
-        setupFirstResponder()
+        updateDayControlStack()
+        
+        let timetableData = loadSavedTimetableData(day.rawValue)
+        
+        for i in 0...allTextFields.count - 1 {
+            allTextFields[i].text = timetableData[i]
+        }
+
+        
+        guard let firstTextField = subjectTextFields.first else { return }
+        firstTextField.becomeFirstResponder()
     }
     
-    func saveTimetable() {
+    func updateDayControlStack() {
+        let subviews = dayControlButtonStack.subviews
+        subviews.forEach { view in
+            dayControlButtonStack.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
+        
+        if day != .monday {
+            dayControlButtonStack.addArrangedSubview(backButton)
+            
+            mondayDayControlButtonWidhtConstraint.isActive = false
+            normalDayControlButtonWidhtConstraint.isActive = true
+            dayControlButtonStack.layoutIfNeeded()
+        } else {
+            normalDayControlButtonWidhtConstraint.isActive = false
+            mondayDayControlButtonWidhtConstraint.isActive = true
+            dayControlButtonStack.layoutIfNeeded()
+        }
+        
+        dayControlButtonStack.addArrangedSubview(nextButton)
+    }
+    
+    func saveTimetableData() {
         let period = getSubjects()
         let classroom = getClassrooms()
         
         UserDefaults.standard.setValue(period, forKey: "subjects:\(day.rawValue)")
         UserDefaults.standard.setValue(classroom, forKey: "classrooms:\(day.rawValue)")
+    }
+    
+    func loadSavedTimetableData(_ dayRawValue: Int) -> [String] {
+        var subjects = [String]()
+        var classrooms = [String]()
+        var results = [String]()
+
+        subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:\(dayRawValue)") as! [String])
+        classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:\(dayRawValue)") as! [String])
+        
+        for i in 0...subjects.count - 1 {
+            results.append(subjects[i])
+            
+            if i < classrooms.count {
+                results.append(classrooms[i])
+            }
+        }
+        
+        return results
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension SetupTimetableController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let currentIndex = allTextFields.firstIndex(of: textField) else { return true }
+        
+        if currentIndex < 13 {
+            allTextFields[currentIndex + 1].becomeFirstResponder()
+        } else if currentIndex == 13 {
+            handleNextButtonTapped()
+        }
+        
+        return true
     }
 }

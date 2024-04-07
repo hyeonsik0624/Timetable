@@ -118,7 +118,7 @@ struct TimetableGrid: View {
     let classrooms = ["3-3", "강1층", "3-3", "3-2", "컴실", "강3층", "3-4"]
     
     var body: some View {
-        HStack() {
+        HStack(alignment: .center, spacing: 4) {
             PeriodGrid(numberOfPeriod: subjects.count)
             SubjectGrid(subjects: subjects)
             ClassroomGrid(classrooms: classrooms)
@@ -136,6 +136,7 @@ struct PeriodGrid: View {
             ForEach(1...numberOfPeriod, id: \.self) { i in
                 Text("\(i):")
                     .fontWeight(.light)
+                    .font(.system(size: 16))
             }
         })
     }
@@ -151,6 +152,7 @@ struct SubjectGrid: View {
             ForEach(1...subjects.count, id: \.self) { i in
                 Text(subjects[i - 1])
                     .fontWeight(.heavy)
+                    .font(.system(size: 17))
             }
         })
     }
@@ -165,10 +167,9 @@ struct ClassroomGrid: View {
         LazyHGrid(rows: rows, content: {
             ForEach(1...classrooms.count, id: \.self) { i in
                 Text(classrooms[i - 1])
-                    .font(.system(size: 14))
+                    .font(.system(size: 16))
                     .fontWeight(.regular)
                     .fontDesign(.rounded)
-                    .multilineTextAlignment(.center)
             }
         })
     }
