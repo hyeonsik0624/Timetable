@@ -92,3 +92,15 @@ extension UIApplication {
 
     }
 }
+
+extension String {
+    var isConsonant: Bool {
+        guard let scalar = UnicodeScalar(self)?.value else {
+            return false
+        }
+        
+        let consonantScalarRange: ClosedRange<UInt32> = 12593...12622
+        
+        return consonantScalarRange ~= scalar
+    }
+}

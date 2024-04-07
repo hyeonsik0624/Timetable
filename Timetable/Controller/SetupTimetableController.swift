@@ -17,7 +17,7 @@ class SetupTimetableController: UIViewController {
     
     private let guidanceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
     }()
     
@@ -111,6 +111,13 @@ class SetupTimetableController: UIViewController {
         return textFields
     }
     
+    private let noticeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "네 글자 이하로 입력해 주세요"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        return label
+    }()
+    
     private lazy var mondayDayControlButtonWidhtConstraint = dayControlButtonStack.widthAnchor.constraint(equalToConstant: 100)
     private lazy var normalDayControlButtonWidhtConstraint = dayControlButtonStack.widthAnchor.constraint(equalToConstant: 210)
     
@@ -134,6 +141,21 @@ class SetupTimetableController: UIViewController {
         day = newDay
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let text = textField.text ?? ""
+        let startIndex = text.startIndex
+        let maxLength = 4
+        
+        if text.count > maxLength {
+            noticeLabel.textColor = .systemRed
+            let targetIndex = text.index(startIndex, offsetBy: maxLength - 1)
+            let newString = text[text.startIndex...targetIndex]
+            textField.text = String(newString)
+        } else {
+            noticeLabel.textColor = .black
+        }
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -152,15 +174,19 @@ class SetupTimetableController: UIViewController {
         guidanceLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 10)
         
         view.addSubview(daysLabel)
-        daysLabel.anchor(top: guidanceLabel.bottomAnchor, paddingTop: 20)
+        daysLabel.anchor(top: guidanceLabel.bottomAnchor, paddingTop: 10)
         daysLabel.centerX(withView: view)
+        
+        view.addSubview(noticeLabel)
+        noticeLabel.anchor(top: daysLabel.bottomAnchor)
+        noticeLabel.centerX(withView: view)
         
         let stack = UIStackView(arrangedSubviews: [subjectInputStack, classroomInputStack])
         stack.spacing = 40
         
         view.addSubview(stack)
         stack.centerX(withView: view)
-        stack.anchor(top: daysLabel.bottomAnchor, paddingTop: 4)
+        stack.anchor(top: noticeLabel.bottomAnchor, paddingTop: 4)
         
         view.addSubview(dayControlButtonStack)
         mondayDayControlButtonWidhtConstraint.isActive = true
@@ -193,7 +219,11 @@ class SetupTimetableController: UIViewController {
     }
     
     func setupTextFields() {
-        allTextFields.forEach { $0.delegate = self; $0.returnKeyType = .next }
+        allTextFields.forEach { tf in
+            tf.delegate = self
+            tf.returnKeyType = .next
+            tf.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        }
     }
     
     func getSubjects() -> [String] {
@@ -253,7 +283,7 @@ class SetupTimetableController: UIViewController {
             guidanceLabel.alpha = 0
             daysLabel.alpha = 0
         } completion: { _ in
-            self.guidanceLabel.text = "\(self.day.name) 시간표를 입력해주세요"
+            self.guidanceLabel.text = "\(self.day.name) 시간표를 입력해 주세요"
             self.daysLabel.text = self.day.name
             
             UIView.animate(withDuration: 0.2) { [self] in
