@@ -24,4 +24,19 @@ enum Weekday: Int, CaseIterable {
             return "금요일"
         }
     }
+    
+    var range: ClosedRange<Int> {
+        switch self {
+        case .monday:
+            return 0...6
+        case .tuesday:
+            return 7...13
+        case .wednesday:
+            return 14...20
+        case .thursday:
+            return 21...27
+        case .friday:
+            return 28...34
+        }
+    }
 }

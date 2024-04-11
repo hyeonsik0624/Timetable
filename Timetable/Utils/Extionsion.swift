@@ -104,3 +104,14 @@ extension String {
         return consonantScalarRange ~= scalar
     }
 }
+
+extension UIButton {
+    func defaultButton(title: String) {
+        backgroundColor = .systemBlue
+        titleLabel?.font = .boldSystemFont(ofSize: 16)
+        setTitleColor(.white, for: .normal)
+        setTitle(title, for: .normal)
+        clipsToBounds = true
+        layer.cornerRadius = 5
+    }
+}

@@ -15,7 +15,7 @@ class SetupTimetableController: UIViewController {
         didSet { updateUI() }
     }
     
-    private let guidanceLabel: UILabel = {
+    private let guideLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
@@ -43,24 +43,16 @@ class SetupTimetableController: UIViewController {
     
     private lazy var nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .systemBlue
-        button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        button.setTitleColor(.white, for: .normal)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 5
+        button.defaultButton(title: "다음")
         button.addTarget(self, action: #selector(handleNextButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .systemGray
-        button.setTitle("이전", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        button.setTitleColor(.white, for: .normal)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 5
+        button.defaultButton(title: "이전")
+        button.backgroundColor = .lightGray
+        button.titleLabel?.font = .systemFont(ofSize: 16)
         button.addTarget(self, action: #selector(handleBackButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -152,7 +144,7 @@ class SetupTimetableController: UIViewController {
             let newString = text[text.startIndex...targetIndex]
             textField.text = String(newString)
         } else {
-            noticeLabel.textColor = .black
+            noticeLabel.textColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
         }
     }
     
@@ -170,11 +162,11 @@ class SetupTimetableController: UIViewController {
     func configureUI() {
         view.backgroundColor = .secondarySystemBackground
         
-        view.addSubview(guidanceLabel)
-        guidanceLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 10)
+        view.addSubview(guideLabel)
+        guideLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 10)
         
         view.addSubview(daysLabel)
-        daysLabel.anchor(top: guidanceLabel.bottomAnchor, paddingTop: 10)
+        daysLabel.anchor(top: guideLabel.bottomAnchor, paddingTop: 10)
         daysLabel.centerX(withView: view)
         
         view.addSubview(noticeLabel)
@@ -196,13 +188,13 @@ class SetupTimetableController: UIViewController {
     }
     
     func makeTimetableInputView(period: Int? = nil) -> UIStackView {
-        let periodLabel = UILabel()
-        periodLabel.font = UIFont.systemFont(ofSize: 15)
+        let guideLabel = UILabel()
+        guideLabel.font = UIFont.systemFont(ofSize: 15)
         
         if let period = period {
-            periodLabel.text = "\(period)교시"
+            guideLabel.text = "\(period)교시"
         } else {
-            periodLabel.text = "교실"
+            guideLabel.text = "교실"
         }
         
         let tf = UITextField()
@@ -213,7 +205,7 @@ class SetupTimetableController: UIViewController {
         
         tf.setDimension(width: 80, height: 34)
         
-        let stack = UIStackView(arrangedSubviews: [periodLabel, tf])
+        let stack = UIStackView(arrangedSubviews: [guideLabel, tf])
         stack.spacing = 10
         return stack
     }
@@ -280,26 +272,25 @@ class SetupTimetableController: UIViewController {
         clearAllTextFields()
         
         UIView.animate(withDuration: 0.2) { [self] in
-            guidanceLabel.alpha = 0
+            guideLabel.alpha = 0
             daysLabel.alpha = 0
         } completion: { _ in
-            self.guidanceLabel.text = "\(self.day.name) 시간표를 입력해 주세요"
+            self.guideLabel.text = "\(self.day.name) 시간표를 입력해 주세요"
             self.daysLabel.text = self.day.name
             
             UIView.animate(withDuration: 0.2) { [self] in
-                self.guidanceLabel.alpha = 1
+                self.guideLabel.alpha = 1
                 self.daysLabel.alpha = 1
             }
         }
         
         updateDayControlStack()
         
-        let timetableData = loadSavedTimetableData(day.rawValue)
-        
-        for i in 0...allTextFields.count - 1 {
-            allTextFields[i].text = timetableData[i]
+        if let timetableData = loadSavedTimetableData(day.rawValue) {
+            for i in 0...allTextFields.count - 1 {
+                allTextFields[i].text = timetableData[i]
+            }
         }
-
         
         guard let firstTextField = subjectTextFields.first else { return }
         firstTextField.becomeFirstResponder()
@@ -335,13 +326,15 @@ class SetupTimetableController: UIViewController {
         UserDefaults.standard.setValue(classroom, forKey: "classrooms:\(day.rawValue)")
     }
     
-    func loadSavedTimetableData(_ dayRawValue: Int) -> [String] {
+    func loadSavedTimetableData(_ dayRawValue: Int) -> [String]? {
         var subjects = [String]()
         var classrooms = [String]()
         var results = [String]()
 
-        subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:\(dayRawValue)") as! [String])
-        classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:\(dayRawValue)") as! [String])
+        guard let subjectsData = UserDefaults.standard.array(forKey: "subjects:\(dayRawValue)") as? [String] else { return nil }
+        guard let classroomsData = UserDefaults.standard.array(forKey: "classrooms:\(dayRawValue)") as? [String] else { return nil }
+        subjects.append(contentsOf: subjectsData)
+        classrooms.append(contentsOf: classroomsData)
         
         for i in 0...subjects.count - 1 {
             results.append(subjects[i])

@@ -52,10 +52,16 @@ class TimetableController: UICollectionViewController {
     // MARK: - Helpers
     
     func loadTimetableData() {
+        var subjects = [String]()
+        var classrooms = [String]()
+        
         for i in 1...5 {
-            self.subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:\(i)") as! [String])
-            self.classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:\(i)") as! [String])
+            subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:\(i)") as! [String])
+            classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:\(i)") as? [String] ?? [])
         }
+        
+        self.subjects = subjects
+        self.classrooms = classrooms
     }
     
     func configureUI() {
@@ -102,6 +108,16 @@ extension TimetableController {
         cell.classroomLabel.text = classrooms[indexPath.row]
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let subject = subjects[indexPath.row]
+        let classroom = classrooms[indexPath.row]
+        
+        let editVC = EditTimetableController(index: indexPath.row, subject: subject, classroom: classroom)
+        let nav = UINavigationController(rootViewController: editVC)
+        editVC.delegate = self
+        present(nav, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -118,5 +134,16 @@ extension TimetableController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
+    }
+}
+
+// MARK: - EditTimetableControllerDelegate
+
+extension TimetableController: EditTimetableControllerDelegate {
+    func didFinishEditingTimetable(_ controller: EditTimetableController) {
+        controller.dismiss(animated: true) {
+            self.loadTimetableData()
+            self.collectionView.reloadData()
+        }
     }
 }

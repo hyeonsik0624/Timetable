@@ -24,6 +24,7 @@
 		B58F9EFA2BB450CD008B5C6E /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9EF92BB450CD008B5C6E /* TimetableWidget.swift */; };
 		B58F9EFC2BB450CE008B5C6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B58F9EFB2BB450CE008B5C6E /* Assets.xcassets */; };
 		B58F9F002BB450CE008B5C6E /* TimetableWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B58F9EF02BB450CD008B5C6E /* TimetableWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B59BA0562BC5858700BBE2DF /* EditTimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59BA0552BC5858700BBE2DF /* EditTimetableController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		B58F9EF92BB450CD008B5C6E /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
 		B58F9EFB2BB450CE008B5C6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B58F9EFD2BB450CE008B5C6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B59BA0552BC5858700BBE2DF /* EditTimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimetableController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				B58F9E572BAE51A7008B5C6E /* SetupTimetableController.swift */,
 				B58F9E5B2BAEA830008B5C6E /* TimetableController.swift */,
 				B58F9E612BB06234008B5C6E /* LoadingController.swift */,
+				B59BA0552BC5858700BBE2DF /* EditTimetableController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B58F9E582BAE51A7008B5C6E /* SetupTimetableController.swift in Sources */,
+				B59BA0562BC5858700BBE2DF /* EditTimetableController.swift in Sources */,
 				B58F9E3E2BAE4FB0008B5C6E /* AppDelegate.swift in Sources */,
 				B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */,
 				B58F9E402BAE4FB0008B5C6E /* SceneDelegate.swift in Sources */,
@@ -468,23 +472,26 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y54J7XTGV3;
+				DEVELOPMENT_TEAM = 2PDJ7M4UWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Timetable/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "시간표";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonsik.Timetable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yeonil.Timetable;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -497,23 +504,26 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y54J7XTGV3;
+				DEVELOPMENT_TEAM = 2PDJ7M4UWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Timetable/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "시간표";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonsik.Timetable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yeonil.Timetable;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -527,7 +537,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y54J7XTGV3;
+				DEVELOPMENT_TEAM = 2PDJ7M4UWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TimetableWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TimetableWidget;
@@ -538,7 +548,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonsik.Timetable.TimetableWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yeonil.Timetable.TimetableWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -554,7 +564,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y54J7XTGV3;
+				DEVELOPMENT_TEAM = 2PDJ7M4UWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TimetableWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TimetableWidget;
@@ -565,7 +575,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonsik.Timetable.TimetableWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yeonil.Timetable.TimetableWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
