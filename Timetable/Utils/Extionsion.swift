@@ -115,3 +115,7 @@ extension UIButton {
         layer.cornerRadius = 5
     }
 }
+
+extension UserDefaults {
+    static let appGroupUserDefaults = UserDefaults(suiteName: "group.dev.hyeonsik.timetable")
+}

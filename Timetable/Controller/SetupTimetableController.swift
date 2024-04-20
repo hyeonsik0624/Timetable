@@ -322,8 +322,8 @@ class SetupTimetableController: UIViewController {
         let period = getSubjects()
         let classroom = getClassrooms()
         
-        UserDefaults.standard.setValue(period, forKey: "subjects:\(day.rawValue)")
-        UserDefaults.standard.setValue(classroom, forKey: "classrooms:\(day.rawValue)")
+        UserDefaults.appGroupUserDefaults?.setValue(period, forKey: "subjects:\(day.rawValue)")
+        UserDefaults.appGroupUserDefaults?.setValue(classroom, forKey: "classrooms:\(day.rawValue)")
     }
     
     func loadSavedTimetableData(_ dayRawValue: Int) -> [String]? {
@@ -331,8 +331,8 @@ class SetupTimetableController: UIViewController {
         var classrooms = [String]()
         var results = [String]()
 
-        guard let subjectsData = UserDefaults.standard.array(forKey: "subjects:\(dayRawValue)") as? [String] else { return nil }
-        guard let classroomsData = UserDefaults.standard.array(forKey: "classrooms:\(dayRawValue)") as? [String] else { return nil }
+        guard let subjectsData = UserDefaults.appGroupUserDefaults?.array(forKey: "subjects:\(dayRawValue)") as? [String] else { return nil }
+        guard let classroomsData = UserDefaults.appGroupUserDefaults?.array(forKey: "classrooms:\(dayRawValue)") as? [String] else { return nil }
         subjects.append(contentsOf: subjectsData)
         classrooms.append(contentsOf: classroomsData)
         

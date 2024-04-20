@@ -8,22 +8,39 @@
 import WidgetKit
 import SwiftUI
 
+let appGroupUserDefaults = UserDefaults(suiteName: "group.dev.hyeonsik.timetable")
+
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> TimetableEntry {
-        TimetableEntry(date: Date())
+        let subjects = ["국", "영", "수", "사", "과", "국", "영"]
+        let classrooms = ["1", "2", "3", "4", "5", "6", "7"]
+        
+        return TimetableEntry(date: Date(), subjects: subjects, classrooms: classrooms)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TimetableEntry) -> ()) {
-        let entry = TimetableEntry(date: Date())
+        let subjects = ["국", "영", "수", "사", "과", "국", "영"]
+        let classrooms = ["1", "2", "3", "4", "5", "6", "7"]
+        
+        let entry = TimetableEntry(date: Date(), subjects: subjects, classrooms: classrooms)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [TimetableEntry] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        entries.append(TimetableEntry(date: currentDate))
+        
+        var weekDay = Calendar.current.component(.weekday, from: currentDate) - 1
+        
+        if weekDay == 6 || weekDay == 7 {
+            weekDay = 1
+        }
+        
+        let subjects = appGroupUserDefaults?.array(forKey: "subjects:\(weekDay)") as? [String] ?? []
+        let classrooms = appGroupUserDefaults?.array(forKey: "classrooms:\(weekDay)") as? [String] ?? []
+        
+        entries.append(TimetableEntry(date: currentDate, subjects: subjects, classrooms: classrooms))
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
@@ -32,6 +49,8 @@ struct Provider: TimelineProvider {
 
 struct TimetableEntry: TimelineEntry {
     var date: Date
+    var subjects: [String]
+    var classrooms: [String]
 }
 
 struct TimetableWidgetEntryView : View {
@@ -45,7 +64,7 @@ struct TimetableWidgetEntryView : View {
                 .fill(colorScheme == .dark ? Color(white: 0.1).gradient : Color.white.gradient)
                 .padding(-20)
             
-            TimetableGrid()
+            TimetableGrid(subjects: entry.subjects, classrooms: entry.classrooms)
         }
     }
 }
@@ -114,8 +133,8 @@ struct ClassroomTextView: View {
 struct TimetableGrid: View {
     let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
     
-    let subjects = ["사문탐", "실용경제", "동사", "확통", "동아리", "동아리", "물II"]
-    let classrooms = ["3-3", "강1층", "3-3", "3-2", "컴실", "강3층", "3-4"]
+    var subjects: [String]
+    var classrooms: [String]
     
     var body: some View {
         HStack(alignment: .center, spacing: 4) {
@@ -178,5 +197,8 @@ struct ClassroomGrid: View {
 #Preview(as: .systemSmall) {
     TimetableWidget()
 } timeline: {
-    TimetableEntry(date: .now)
+    let subjects = ["국", "영", "수", "사", "과", "국", "영"]
+    let classrooms = ["1", "2", "3", "4", "5", "6", "7"]
+    
+    TimetableEntry(date: Date(), subjects: subjects, classrooms: classrooms)
 }

@@ -56,8 +56,8 @@ class TimetableController: UICollectionViewController {
         var classrooms = [String]()
         
         for i in 1...5 {
-            subjects.append(contentsOf: UserDefaults.standard.array(forKey: "subjects:\(i)") as! [String])
-            classrooms.append(contentsOf: UserDefaults.standard.array(forKey: "classrooms:\(i)") as? [String] ?? [])
+            subjects.append(contentsOf: UserDefaults.appGroupUserDefaults?.array(forKey: "subjects:\(i)") as! [String])
+            classrooms.append(contentsOf: UserDefaults.appGroupUserDefaults?.array(forKey: "classrooms:\(i)") as? [String] ?? [])
         }
         
         self.subjects = subjects

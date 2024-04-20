@@ -57,8 +57,8 @@ class EditTimetableController: UIViewController {
         var classrooms = [String]()
         
         for i in 1...5 {
-            guard let sbs = UserDefaults.standard.array(forKey: "subjects:\(i)") as? [String] else { return }
-            guard let cls = UserDefaults.standard.array(forKey: "classrooms:\(i)") as? [String] else { return }
+            guard let sbs = UserDefaults.appGroupUserDefaults?.array(forKey: "subjects:\(i)") as? [String] else { return }
+            guard let cls = UserDefaults.appGroupUserDefaults?.array(forKey: "classrooms:\(i)") as? [String] else { return }
             
             subjects.append(contentsOf: sbs)
             classrooms.append(contentsOf: cls)
@@ -89,8 +89,8 @@ class EditTimetableController: UIViewController {
         let editedOneDaySubjects = Array(subjects[day.range])
         let editedOneDayClassrooms = Array(classrooms[day.range])
         
-        UserDefaults.standard.setValue(editedOneDaySubjects, forKey: "subjects:\(day.rawValue)")
-        UserDefaults.standard.setValue(editedOneDayClassrooms, forKey: "classrooms:\(day.rawValue)")
+        UserDefaults.appGroupUserDefaults?.setValue(editedOneDaySubjects, forKey: "subjects:\(day.rawValue)")
+        UserDefaults.appGroupUserDefaults?.setValue(editedOneDayClassrooms, forKey: "classrooms:\(day.rawValue)")
         
         delegate?.didFinishEditingTimetable(self)
     }
