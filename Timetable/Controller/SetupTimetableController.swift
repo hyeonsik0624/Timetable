@@ -11,9 +11,7 @@ class SetupTimetableController: UIViewController {
     
     // MARK: - Properties
     
-    private var day = Weekday.monday {
-        didSet { updateUI() }
-    }
+    private var viewModel = SetupTimetableViewModel.shared
     
     private let guideLabel: UILabel = {
         let label = UILabel()
@@ -116,21 +114,29 @@ class SetupTimetableController: UIViewController {
     // MARK: - Actions
     
     @objc func handleNextButtonTapped() {
-        saveTimetableData()
+        let subjectTexts = getSubjects()
+        let classroomTexts = getClassrooms()
         
-        guard let nextDay = Weekday(rawValue: day.rawValue + 1) else {
-            let controller = TimetableController(collectionViewLayout: UICollectionViewFlowLayout())
-            controller.modalPresentationStyle = .fullScreen
-            present(controller, animated: true)
-            return
+        viewModel.saveTimetableData(subjectsData: subjectTexts, classroomsData: classroomTexts) {
+            
+            self.viewModel.changeDay(toNextDay: true) { isFriday in
+                DispatchQueue.main.async {
+                    if isFriday {
+                        let controller = TimetableController(collectionViewLayout: UICollectionViewFlowLayout())
+                        controller.modalPresentationStyle = .fullScreen
+                        self.present(controller, animated: true)
+                    } else {
+                        self.updateUI()
+                    }
+                }
+            }
         }
-        
-        day = nextDay
     }
     
     @objc func handleBackButtonTapped() {
-        guard let newDay = Weekday(rawValue: day.rawValue - 1) else { return }
-        day = newDay
+        viewModel.changeDay(toNextDay: false) { _ in
+            self.updateUI()
+        }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -275,8 +281,8 @@ class SetupTimetableController: UIViewController {
             guideLabel.alpha = 0
             daysLabel.alpha = 0
         } completion: { _ in
-            self.guideLabel.text = "\(self.day.name) 시간표를 입력해 주세요"
-            self.daysLabel.text = self.day.name
+            self.guideLabel.text = self.viewModel.getGuideText()
+            self.daysLabel.text = self.viewModel.getDayName()
             
             UIView.animate(withDuration: 0.2) { [self] in
                 self.guideLabel.alpha = 1
@@ -286,9 +292,14 @@ class SetupTimetableController: UIViewController {
         
         updateDayControlStack()
         
-        if let timetableData = loadSavedTimetableData(day.rawValue) {
-            for i in 0...allTextFields.count - 1 {
-                allTextFields[i].text = timetableData[i]
+        viewModel.loadTimetableData {
+            let timetableData = self.viewModel.getTimetableData()
+            print(timetableData)
+            
+            DispatchQueue.main.async {
+                for i in 0...self.allTextFields.count - 1 {
+                    self.allTextFields[i].text = timetableData[i]
+                }
             }
         }
         
@@ -303,7 +314,7 @@ class SetupTimetableController: UIViewController {
             view.removeFromSuperview()
         }
         
-        if day != .monday {
+        if viewModel.shouldShowBackButton {
             dayControlButtonStack.addArrangedSubview(backButton)
             
             mondayDayControlButtonWidhtConstraint.isActive = false
@@ -316,35 +327,6 @@ class SetupTimetableController: UIViewController {
         }
         
         dayControlButtonStack.addArrangedSubview(nextButton)
-    }
-    
-    func saveTimetableData() {
-        let period = getSubjects()
-        let classroom = getClassrooms()
-        
-        UserDefaults.appGroupUserDefaults?.setValue(period, forKey: "subjects:\(day.rawValue)")
-        UserDefaults.appGroupUserDefaults?.setValue(classroom, forKey: "classrooms:\(day.rawValue)")
-    }
-    
-    func loadSavedTimetableData(_ dayRawValue: Int) -> [String]? {
-        var subjects = [String]()
-        var classrooms = [String]()
-        var results = [String]()
-
-        guard let subjectsData = UserDefaults.appGroupUserDefaults?.array(forKey: "subjects:\(dayRawValue)") as? [String] else { return nil }
-        guard let classroomsData = UserDefaults.appGroupUserDefaults?.array(forKey: "classrooms:\(dayRawValue)") as? [String] else { return nil }
-        subjects.append(contentsOf: subjectsData)
-        classrooms.append(contentsOf: classroomsData)
-        
-        for i in 0...subjects.count - 1 {
-            results.append(subjects[i])
-            
-            if i < classrooms.count {
-                results.append(classrooms[i])
-            }
-        }
-        
-        return results
     }
 }
 

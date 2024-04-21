@@ -26,6 +26,7 @@
 		B58F9F002BB450CE008B5C6E /* TimetableWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B58F9EF02BB450CD008B5C6E /* TimetableWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B59BA0562BC5858700BBE2DF /* EditTimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59BA0552BC5858700BBE2DF /* EditTimetableController.swift */; };
 		B5AAB4B82BD3F4A100F4B549 /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AAB4B72BD3F4A100F4B549 /* TimetableViewModel.swift */; };
+		B5AAB4BA2BD3FCA200F4B549 /* SetupTimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AAB4B92BD3FCA200F4B549 /* SetupTimetableViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		B59B1C292BCFAD2F0075906D /* TimetableWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimetableWidgetExtension.entitlements; sourceTree = "<group>"; };
 		B59BA0552BC5858700BBE2DF /* EditTimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimetableController.swift; sourceTree = "<group>"; };
 		B5AAB4B72BD3F4A100F4B549 /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
+		B5AAB4B92BD3FCA200F4B549 /* SetupTimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTimetableViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				B5AAB4B72BD3F4A100F4B549 /* TimetableViewModel.swift */,
+				B5AAB4B92BD3FCA200F4B549 /* SetupTimetableViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			files = (
 				B58F9E582BAE51A7008B5C6E /* SetupTimetableController.swift in Sources */,
 				B59BA0562BC5858700BBE2DF /* EditTimetableController.swift in Sources */,
+				B5AAB4BA2BD3FCA200F4B549 /* SetupTimetableViewModel.swift in Sources */,
 				B5AAB4B82BD3F4A100F4B549 /* TimetableViewModel.swift in Sources */,
 				B58F9E3E2BAE4FB0008B5C6E /* AppDelegate.swift in Sources */,
 				B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */,

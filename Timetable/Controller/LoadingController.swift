@@ -36,7 +36,12 @@ class LoadingController: UIViewController {
     }
     
     func checkIfDataExists() {
-        if UserDefaults.appGroupUserDefaults?.array(forKey: "classrooms:5") != nil {
+        guard let data = UserDefaults.appGroupUserDefaults?.array(forKey: "subjects:5") as? [String] else {
+            showController(SetupTimetableController())
+            return
+        }
+        
+        if data.first != "" {
             showController(TimetableController(collectionViewLayout: UICollectionViewFlowLayout()))
         } else {
             showController(SetupTimetableController())

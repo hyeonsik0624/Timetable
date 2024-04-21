@@ -13,11 +13,7 @@ class TimetableController: UICollectionViewController {
     
     // MARK: - Properties
 
-    private var subjects = [String]()
-    
-    private var classrooms = [String]() {
-        didSet { collectionView.reloadData() }
-    }
+    private var viewModel = TimetableViewModel.shared
     
     private let numberOfDays: CGFloat = 5
     private let numberOfPeriods: CGFloat = 7
@@ -46,23 +42,10 @@ class TimetableController: UICollectionViewController {
         super.viewDidLoad()
         configureCollectionView()
         configureUI()
-        loadTimetableData()
+        viewModel.loadTimetableData()
     }
     
     // MARK: - Helpers
-    
-    func loadTimetableData() {
-        var subjects = [String]()
-        var classrooms = [String]()
-        
-        for i in 1...5 {
-            subjects.append(contentsOf: UserDefaults.appGroupUserDefaults?.array(forKey: "subjects:\(i)") as! [String])
-            classrooms.append(contentsOf: UserDefaults.appGroupUserDefaults?.array(forKey: "classrooms:\(i)") as? [String] ?? [])
-        }
-        
-        self.subjects = subjects
-        self.classrooms = classrooms
-    }
     
     func configureUI() {
         view.backgroundColor = .secondarySystemBackground
@@ -79,6 +62,7 @@ class TimetableController: UICollectionViewController {
         
         let width = cellWidth * numberOfDays + numberOfDays
         let height = cellHeigt * numberOfPeriods + numberOfPeriods
+        
         collectionView.setDimension(width: width, height: height)
         collectionView.centerX(withView: view)
         collectionView.centerY(withView: view)
@@ -103,6 +87,9 @@ extension TimetableController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let subjects = viewModel.getSubjects()
+        let classrooms = viewModel.getClassrooms()
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TimetableCell
         cell.subjectLabel.text = subjects[indexPath.row]
         cell.classroomLabel.text = classrooms[indexPath.row]
@@ -110,10 +97,10 @@ extension TimetableController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let subject = subjects[indexPath.row]
-        let classroom = classrooms[indexPath.row]
+        let subjects = viewModel.getSubjects()
+        let classrooms = viewModel.getClassrooms()
         
-        let editVC = EditTimetableController(index: indexPath.row, subject: subject, classroom: classroom)
+        let editVC = EditTimetableController(index: indexPath.row, subject: subjects[indexPath.row], classroom: classrooms[indexPath.row])
         let nav = UINavigationController(rootViewController: editVC)
         editVC.delegate = self
         present(nav, animated: true)
@@ -142,7 +129,7 @@ extension TimetableController: UICollectionViewDelegateFlowLayout {
 extension TimetableController: EditTimetableControllerDelegate {
     func didFinishEditingTimetable(_ controller: EditTimetableController) {
         controller.dismiss(animated: true) {
-            self.loadTimetableData()
+            self.viewModel.loadTimetableData()
             self.collectionView.reloadData()
         }
     }
