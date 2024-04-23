@@ -41,8 +41,15 @@ struct Provider: TimelineProvider {
         let classrooms = appGroupUserDefaults?.array(forKey: "classrooms:\(weekDay)") as? [String] ?? []
         
         entries.append(TimetableEntry(date: currentDate, subjects: subjects, classrooms: classrooms))
+        
+        var nextUpdateDate = Calendar.current.startOfDay(for: currentDate)
+        nextUpdateDate = Calendar.current.date(bySettingHour: 3, minute: 0, second: 0, of: nextUpdateDate)!
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        if nextUpdateDate <= currentDate {
+            nextUpdateDate = Calendar.current.date(byAdding: .day, value: 1, to: nextUpdateDate)!
+        }
+
+        let timeline = Timeline(entries: entries, policy: .after(nextUpdateDate))
         completion(timeline)
     }
 }
