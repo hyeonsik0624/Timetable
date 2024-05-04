@@ -41,7 +41,7 @@ class EditTimetableController: UIViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.defaultButton(title: "닫기")
-        button.backgroundColor = .lightGray
+        button.backgroundColor = .systemGray
         button.titleLabel?.font = .systemFont(ofSize: 16)
         button.addTarget(self, action: #selector(handleCloseButtonTapped), for: .touchUpInside)
         return button
@@ -207,8 +207,4 @@ class EditTimetableController: UIViewController {
         
         return result
     }
-}
-
-extension EditTimetableController: UITextFieldDelegate {
-    
 }
