@@ -49,7 +49,7 @@ class SetupTimetableController: UIViewController {
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.defaultButton(title: "이전")
-        button.backgroundColor = .lightGray
+        button.backgroundColor = .systemGray
         button.titleLabel?.font = .systemFont(ofSize: 16)
         button.addTarget(self, action: #selector(handleBackButtonTapped), for: .touchUpInside)
         return button

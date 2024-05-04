@@ -52,7 +52,7 @@ class LoadingController: UIViewController {
         DispatchQueue.main.async {
             let controller = controller
             controller.modalPresentationStyle = .fullScreen
-            self.present(controller, animated: true)
+            self.present(controller, animated: false)
         }
     }
 }
