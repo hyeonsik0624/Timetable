@@ -233,12 +233,3 @@ func getWeekDayNumber() -> Int {
     
     return weekDay
 }
-
-#Preview(as: .systemSmall) {
-    TimetableWidget()
-} timeline: {
-    let subjects = ["체육", "지구과학", "지구과학", "심화국어", "영독작", "동사", ""]
-    let classrooms = ["", "3-4", "3-5", "3-5", "3-4", "가가교", ""]
-    
-    TimetableEntry(date: Date(), subjects: subjects, classrooms: classrooms)
-}

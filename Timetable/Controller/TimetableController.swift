@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TipKit
 
 private let reuseIdentifier = "TimetableCell"
 
@@ -36,13 +37,32 @@ class TimetableController: UICollectionViewController {
         return stack
     }()
     
+    private var editTimetableTip = EditTimetableTip()
+    private var tipObservationTask: Task<Void, Never>?
+    private weak var tipView: TipUIView?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        adjustUIForSmallDevices()
         configureCollectionView()
         configureUI()
         viewModel.loadTimetableData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        showTip()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        tipObservationTask?.cancel()
+        tipObservationTask = nil
     }
     
     // MARK: - Helpers
@@ -54,7 +74,7 @@ class TimetableController: UICollectionViewController {
         daysHeaderStack.anchor(left: collectionView.leftAnchor, bottom: collectionView.topAnchor, right: collectionView.rightAnchor, paddingBottom: 5)
         
         view.addSubview(periodHeaderStack)
-        periodHeaderStack.anchor(top: collectionView.topAnchor, left: view.leftAnchor, bottom: collectionView.bottomAnchor, paddingLeft: 4)
+        periodHeaderStack.anchor(top: collectionView.topAnchor, bottom: collectionView.bottomAnchor, right: collectionView.leftAnchor, paddingRight: 3)
     }
     
     func configureCollectionView() {
@@ -76,6 +96,43 @@ class TimetableController: UICollectionViewController {
         label.text = day
         label.textAlignment = .center
         return label
+    }
+    
+    func adjustUIForSmallDevices() {
+        let screenHeight = UIScreen.main.bounds.size.height
+        
+        if screenHeight <= 667 {
+            periodHeaderStack.isHidden = true
+        }
+    }
+    
+    func showTip() {
+        do {
+            try Tips.configure()
+        } catch {
+            return
+        }
+        
+        tipObservationTask = tipObservationTask ?? Task { @MainActor in
+            for await shouldDisplay in editTimetableTip.shouldDisplayUpdates {
+                if shouldDisplay {
+                    let tipHostingView = TipUIView(editTimetableTip)
+                    tipHostingView.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    view.addSubview(tipHostingView)
+                    
+                    tipHostingView.centerX(withView: view)
+                    tipHostingView.anchor(bottom: daysHeaderStack.topAnchor, paddingBottom: 20)
+                    tipHostingView.backgroundColor = .systemBackground
+                    
+                    tipView = tipHostingView
+                }
+                else {
+                    tipView?.removeFromSuperview()
+                    tipView = nil
+                }
+            }
+        }
     }
 }
 

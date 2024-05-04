@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B5831E912BE6253B00AC4505 /* EditTimetableTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5831E902BE6253B00AC4505 /* EditTimetableTip.swift */; };
 		B58F9E3E2BAE4FB0008B5C6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E3D2BAE4FB0008B5C6E /* AppDelegate.swift */; };
 		B58F9E402BAE4FB0008B5C6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F9E3F2BAE4FB0008B5C6E /* SceneDelegate.swift */; };
 		B58F9E452BAE4FB0008B5C6E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B58F9E442BAE4FB0008B5C6E /* Base */; };
@@ -54,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B5831E902BE6253B00AC4505 /* EditTimetableTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimetableTip.swift; sourceTree = "<group>"; };
 		B58F9E3A2BAE4FB0008B5C6E /* Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timetable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58F9E3D2BAE4FB0008B5C6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B58F9E3F2BAE4FB0008B5C6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				B58F9E5F2BAEFF4A008B5C6E /* TimetableCell.swift */,
+				B5831E902BE6253B00AC4505 /* EditTimetableTip.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				B58F9E5C2BAEA830008B5C6E /* TimetableController.swift in Sources */,
 				B58F9E402BAE4FB0008B5C6E /* SceneDelegate.swift in Sources */,
 				B58F9E622BB06234008B5C6E /* LoadingController.swift in Sources */,
+				B5831E912BE6253B00AC4505 /* EditTimetableTip.swift in Sources */,
 				B58F9E5A2BAE5BE5008B5C6E /* Extionsion.swift in Sources */,
 				B58F9E602BAEFF4A008B5C6E /* TimetableCell.swift in Sources */,
 				B58F9E5E2BAEB4C4008B5C6E /* Timetable.swift in Sources */,
@@ -491,12 +495,14 @@
 				DEVELOPMENT_TEAM = 2PDJ7M4UWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Timetable/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "시간표";
+				INFOPLIST_KEY_CFBundleDisplayName = "현식 시간표";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -505,9 +511,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dev.hyeonsik.Timetable;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -524,12 +534,14 @@
 				DEVELOPMENT_TEAM = 2PDJ7M4UWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Timetable/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "시간표";
+				INFOPLIST_KEY_CFBundleDisplayName = "현식 시간표";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,9 +550,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dev.hyeonsik.Timetable;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -558,6 +574,7 @@
 				INFOPLIST_FILE = TimetableWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TimetableWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,9 +585,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -588,6 +609,7 @@
 				INFOPLIST_FILE = TimetableWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TimetableWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -598,9 +620,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
