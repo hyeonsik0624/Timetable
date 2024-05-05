@@ -46,7 +46,6 @@ class TimetableController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustUIForSmallDevices()
         configureCollectionView()
         configureUI()
         viewModel.loadTimetableData()
@@ -56,6 +55,7 @@ class TimetableController: UICollectionViewController {
         super.viewWillAppear(animated)
         
         showTip()
+        adjustUIForSmallDevices()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,12 +101,16 @@ class TimetableController: UICollectionViewController {
     func adjustUIForSmallDevices() {
         let screenHeight = UIScreen.main.bounds.size.height
         
-        if screenHeight <= 667 {
+        if screenHeight <= 812 {
             periodHeaderStack.isHidden = true
         }
     }
     
     func showTip() {
+        let screenHeight = UIScreen.main.bounds.size.height
+        
+        guard screenHeight > 812 else { return }
+        
         do {
             try Tips.configure()
         } catch {
