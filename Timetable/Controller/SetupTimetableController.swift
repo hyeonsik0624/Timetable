@@ -13,7 +13,7 @@ class SetupTimetableController: UIViewController {
     
     private var viewModel = SetupTimetableViewModel.shared
     
-    private let guideLabel: UILabel = {
+    private lazy var guideLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
@@ -169,9 +169,21 @@ class SetupTimetableController: UIViewController {
         view.backgroundColor = .secondarySystemBackground
         
         view.addSubview(guideLabel)
+        view.addSubview(daysLabel)
+        
+        let screenHeight = UIScreen.main.bounds.size.height
+        
+        switch screenHeight {
+        case 0...667:
+            guideLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: -46, paddingLeft: 10)
+        case 668...812:
+            guideLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: 10)
+        default:
+            guideLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 10)
+        }
+        
         guideLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 10)
         
-        view.addSubview(daysLabel)
         daysLabel.anchor(top: guideLabel.bottomAnchor, paddingTop: 10)
         daysLabel.centerX(withView: view)
         
