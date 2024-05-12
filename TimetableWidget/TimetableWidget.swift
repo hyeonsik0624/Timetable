@@ -141,7 +141,7 @@ struct TimetableGrid: View {
     var filterdClassrooms: [String] {
         var classrooms = classrooms
         
-        if classrooms.last == "" {
+        if subjects[6] == "" {
             classrooms.removeLast()
         }
         
@@ -150,7 +150,7 @@ struct TimetableGrid: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            PeriodGrid(numberOfPeriod: filterdClassrooms.count)
+            PeriodGrid(numberOfPeriod: filterdSubjects.count)
             SubjectGrid(subjects: filterdSubjects)
             ClassroomGrid(classrooms: filterdClassrooms)
         }
@@ -227,9 +227,19 @@ func getWeekDayNumber() -> Int {
     
     var weekDay = Calendar.current.component(.weekday, from: currentDate) - 1
     
-    if weekDay == 6 || weekDay == 7 {
+    if weekDay == 6 || weekDay == 0 {
         weekDay = 1
     }
     
     return weekDay
+}
+
+
+#Preview(as: .systemSmall) {
+    TimetableWidget()
+} timeline: {
+    let subjects = ["음악", "지구과학", "지구과학", "심화국어", "영독작", "동사", "창체"]
+    let classrooms = ["음악실", "3-4", "3-5", "3-5", "3-4", "가가교", " "]
+
+    TimetableEntry(date: Date(), subjects: subjects, classrooms: classrooms)
 }
